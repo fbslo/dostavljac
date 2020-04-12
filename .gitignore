@@ -2,3 +2,4 @@
 *.save.*
 *.swp
 /backend-node/node_modules
+/back-end/.env
