@@ -1,5 +1,7 @@
 ***Dokumentacija za NodeJS API:***
 
+Rename demo.env to .env
+
 ---
 
 Database table: verifyEmail
