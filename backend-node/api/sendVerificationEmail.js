@@ -10,6 +10,7 @@ var domain = 'http://localhost:8080'
 router.post('/', (req, res) => {
   var server_secret = req.body.secret
   var email = req.body.email
+  if(server_secret == process.env.SERVER_SECRET)
   var secret = generateSecret(30)
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
