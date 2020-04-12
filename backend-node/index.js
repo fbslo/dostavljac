@@ -1,6 +1,7 @@
 const express = require('express');
 var app = express()
 var bodyParser = require("body-parser");
+require('dotenv').config();
 
 //remove x-powered-by Express header
 app.disable('x-powered-by');
