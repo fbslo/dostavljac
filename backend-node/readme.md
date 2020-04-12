@@ -1,10 +1,21 @@
 ***Dokumentacija za NodeJS API:***
 
+---
+
+Database table: verifyEmail
+email TEXT, secret TEXT, date TEXT, used BOOL
+
+---
+
 GET /api/verifyEmail
 
 @apiParam {string} secret Secret used to verify user's email. Generated at sendVerificationEmail.js
 
+---
+
 POST /api/sendVerificationEmail
 
-@apiParam {string} secret Server secret
+sendVerificationEmail is using Sendgrid's email API.
+
+@apiParam {string} secret Server secret (from .env)
 @apiParam {string} email User's email
