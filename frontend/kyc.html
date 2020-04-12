@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dostavljač</title>
+    <script src="./jquery.js"></script>
+    <link rel="stylesheet" href="./bootstrap.min.css" >
+  </head>
+  <body>
+    <div class="container">
+      <form class="forms-sample" action='/api/kyc' method="POST" encType="multipart/form-data">
+
+        <div class="form-group">
+          <label>Dodaj sliko (Največja velikost 5 MB)</label>
+          <div class="input-group col-xs-12">
+            <span class="input-group-append">
+              <input type="file" id='file' class="btn btn-danger btn-icon-text" name='file' required></input>
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-2">Pošlji</button>
+        <button type='reset' class="btn btn-secondary">Prekliči</button>
+      </form>
+    </div>
+  </body>
+</html>

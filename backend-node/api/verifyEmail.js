@@ -3,14 +3,10 @@ var router = express.Router()
 //get database connection
 var con = require('../database/database.js')
 
-/*
-* Database table: verifyEmail
-* email TEXT, secret TEXT, date TEXT, used BOOL
-*/
-
+//GET /api/verifyEmail
 router.get('/', (req, res) => {
   try {
-    //get secret from url ?secret=
+    //get secret from url query ?secret=
     var secret = req.query.secret
     var sql = 'SELECT * FROM verifyEmail WHERE secret = ?;'
     con.query(sql, secret, (err, result) => {
@@ -24,7 +20,7 @@ router.get('/', (req, res) => {
       }
     })
   } catch (error) {
-    console.log('error'+error)
+    console.log('Error: '+error)
   }
 })
 
