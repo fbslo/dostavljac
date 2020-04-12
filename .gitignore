@@ -1,3 +1,4 @@
 *.save
 *.save.*
 *.swp
+/backend-node/node_modules
