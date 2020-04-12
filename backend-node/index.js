@@ -12,6 +12,7 @@ app.set('view engine', 'ejs');
 //for parsing application/json
 app.use(bodyParser.json());
 
+app.use('/api/sendVerificationEmail', require('./api/sendVerificationEmail.js'));
 app.use('/api/verifyEmail', require('./api/verifyEmail.js'));
 
 app.listen(8080)
