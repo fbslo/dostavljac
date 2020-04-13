@@ -26,8 +26,8 @@ function login(){
       <input type="password" class="form-control" id="password" placeholder="Geslo" required>
     </div>
     <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label small text-muted" for="exampleCheck1">Zapomni si me</label>
+      <input type="checkbox" class="form-check-input" id="check">
+      <label class="form-check-label small text-muted" for="check">Zapomni si me</label>
     </div>
     <button type="submit" class="btn btn-success btn-round btn-block shadow-sm">Prijava</button>
     <small class="d-block mt-4 text-center"><a class="text-gray" href="#">Pozabljeno geslo?</a></small>
