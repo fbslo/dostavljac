@@ -4,6 +4,10 @@ Preimenuj `demo.env` v `.env`
 
 ---
 
+Database table: `users`
+
+`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT`
+
 Database table: `verifyEmail`
 
 `email TEXT, secret TEXT, date TEXT, used BOOL`
@@ -48,3 +52,16 @@ sendVerificationEmail omogoča pošiljanje email-ov z potrditveno povezavo/kodo 
 KYC (Know Your Customer) omogoča upload slike (npr. osebna izkaznica, selfie...) za verifikacijo novih uporabnikov in zmanjševanje zlorab. Slika se shrani v `backend-node/kyc/` mapo, največja velikost je 5 MB (lahko spremeniš v index.js), dovoljeni formati so jpeg, png, gif.
 
 Opomba: `encType` pri POST requestu (vsaj v HTML form) mora biti `multipart/form-data`.
+
+---
+
+`POST` `/api/register`
+
+Registracija novih uporabnikov.
+
+```
+@apiParam {string} email User's email
+@apiParam {string} password User's password
+```
+
+If email, password or name is missing, redirect to: ?status=false&reason=missing
