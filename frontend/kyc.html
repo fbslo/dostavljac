@@ -8,7 +8,16 @@
   </head>
   <body>
     <div class="container">
-      <form class="forms-sample" action='/api/kyc' method="POST" encType="multipart/form-data">
+      <form class="forms-sample" action='http://localhost:8080/api/kyc' method="POST" encType="multipart/form-data">
+
+		<div class="form-group">
+          <label>Email:</label>
+          <div class="input-group col-xs-12">
+            <span class="input-group-append">
+              <input type="text" id='email'  name='email' required></input>
+            </span>
+          </div>
+        </div>
 
         <div class="form-group">
           <label>Dodaj sliko (Največja velikost 5 MB)</label>
