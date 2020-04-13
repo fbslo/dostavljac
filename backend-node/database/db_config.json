@@ -1,0 +1,7 @@
+{
+  "database_ip": "localhost",
+  "database_user": "root",
+  "database_password": "geslo123",
+  "database_port": "3306",
+  "database": "dostavljac"
+}

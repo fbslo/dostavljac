@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dostavljač</title>
+    <script src="./js/jquery.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+    .padding {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="container text-center">
+      <form action='api/kyc' method="POST" encType="multipart/form-data">
+        <div class='row justify-content-center padding'>
+          <input class='input-group-text' type='email' placeholder='Email' required>
+        </div>
+        <div>
+          <small class='padding'>Dodaj sliko (največ 5MB)</small>
+        </div>
+        <div class="input-group padding">
+          <div class="custom-file padding">
+            <input type="file" class="custom-file-input" id="customFile" required>
+            <label class="custom-file-label" for="customFile">Choose file</label>
+          </div>
+        </div>
+        <div class='padding' id='filename'></div>
+        <script>
+          $('input:file').change(
+            function(e){
+              document.getElementById('filename').innerHTML = e.target.files[0].name
+            });
+        </script>
+        <button type="submit" class="btn btn-primary mr-2">Pošlji</button>
+      </form>
+    </div>
+  </body>
+</html>
