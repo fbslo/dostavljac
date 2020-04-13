@@ -1,6 +1,5 @@
 function register(){
-  var register = `
-  <form class="border rounded p-5">
+  var register = `<form class="border rounded p-5" method="POST" action="/api/register">
     <h3 class="mb-4 text-center">Registracija</h3>
     <div class="form-group">
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
@@ -17,8 +16,11 @@ function register(){
 
 function login(){
   var register = `
-  <form class="border rounded p-5">
+  <form class="border rounded p-5" method="POST" action="/api/login">
     <h3 class="mb-4 text-center">Prijava</h3>
+    <div class="form-group">
+      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Ime in Priimek" required>
+    </div>
     <div class="form-group">
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
     </div>
@@ -35,3 +37,37 @@ function login(){
   document.getElementById('login-register').innerHTML = register
   document.getElementById('left-button').innerHTML = '<a class="btn btn-outline-light btn-lg btn-round" onclick="register()">Registracija</a>'
 }
+
+
+function start(){
+  var status = urlParams["status"] || ''
+  var query = urlParams["reason"] || ''
+  if(!query) login()
+  else{
+    if(query == 'missing'){
+      sendAlert('Napaka', 'Manjka email ali geslo!', 'error')
+    }
+    login()
+  }
+}
+
+function sendAlert(title, message, icon){
+  Swal.fire(
+  title,
+  message,
+  icon
+  )
+}
+
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();

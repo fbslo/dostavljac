@@ -9597,9 +9597,9 @@ a {
 ul.list-unstyled li {
   margin-bottom: .3rem; }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .loginarea {
-    z-index: 1111; } }
+    z-index: 1111; } } */
 
 article {
   line-height: 1.7; }
