@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
     console.log(image.mimetype)
   } else {
     //upload file to /kyc
-    var image_name = image.name+email+date
+    var image_name = email+'-'+image.name
     image.mv(require('path').dirname(require.main.filename)+'/kyc/'+image_name, function(err) {
       var sql = 'INSERT INTO kyc (email, image, date) VALUES ?'
       var values = [[email, image_name, date]]
@@ -22,7 +22,10 @@ router.post('/', (req, res) => {
         if(!err){
            res.send("File uploaded!")
         }
-        if(err) res.send("Error, file not uploaded!")
+        if(err){
+			res.send("Error, file not uploaded!")
+			console.log(err)
+		} 
       })
     })
   }
