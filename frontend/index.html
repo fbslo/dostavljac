@@ -14,8 +14,10 @@
     <link href="./assets/css/vendor/aos.css" rel="stylesheet"/>
     <style src="./css/first-page.css"></style>
     <script src="./js/first-page.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   </head>
-  <body>
+  <body onload="start()">
     <!-- Main -->
     <div class="d-md-flex h-md-100 align-items-center">
       <!-- Left side -->
@@ -34,21 +36,6 @@
       <!-- Right side -->
     	<div class="col-md-6 p-0 bg-white h-md-100 loginarea">
     		<div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center" id='login-register'>
-    			<form class="border rounded p-5">
-    				<h3 class="mb-4 text-center">Prijava</h3>
-    				<div class="form-group">
-    					<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required="">
-    				</div>
-    				<div class="form-group">
-    					<input type="password" class="form-control" id="password" placeholder="Geslo" required="">
-    				</div>
-    				<div class="form-group form-check">
-    					<input type="checkbox" class="form-check-input" id="check">
-    					<label class="form-check-label small text-muted" for="check">Zapomni si me</label>
-    				</div>
-    				<button type="submit" class="btn btn-success btn-round btn-block shadow-sm">Prijava</button>
-    				<small class="d-block mt-4 text-center"><a class="text-gray" href="#">Pozabljeno geslo?</a></small>
-    			</form>
     		</div>
     	</div>
     </div>

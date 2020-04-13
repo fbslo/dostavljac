@@ -25,6 +25,8 @@ app.use('/api/sendVerificationEmail', require('./api/sendVerificationEmail.js'))
 app.use('/api/verifyEmail', require('./api/verifyEmail.js'));
 //Know your customer, ID verification photo upload
 app.use('/api/kyc', require('./api/kyc.js'));
+//registration of new users
+app.use('/api/register', require('./api/register.js'));
 
 
 app.listen(8080)
