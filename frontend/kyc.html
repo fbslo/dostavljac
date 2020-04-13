@@ -17,14 +17,14 @@
     <div class="container text-center">
       <form action='api/kyc' method="POST" encType="multipart/form-data">
         <div class='row justify-content-center padding'>
-          <input class='input-group-text' type='text' placeholder='Email'>
+          <input class='input-group-text' type='email' placeholder='Email' required>
         </div>
         <div>
           <small class='padding'>Dodaj sliko (največ 5MB)</small>
         </div>
         <div class="input-group padding">
           <div class="custom-file padding">
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" class="custom-file-input" id="customFile" required>
             <label class="custom-file-label" for="customFile">Choose file</label>
           </div>
         </div>
