@@ -8,6 +8,11 @@ Database table: `verifyEmail`
 
 `email TEXT, secret TEXT, date TEXT, used BOOL`
 
+Database table: `kyc`
+
+`email TEXT, file TEXT, date TEXT`
+
+
 ---
 
 `POST` `/api/sendVerificationEmail`
