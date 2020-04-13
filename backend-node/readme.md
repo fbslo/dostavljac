@@ -60,6 +60,7 @@ Opomba: `encType` pri POST requestu (vsaj v HTML form) mora biti `multipart/form
 Registracija novih uporabnikov.
 
 ```
+@apiParam {string} name User's name
 @apiParam {string} email User's email
 @apiParam {string} password User's password
 ```

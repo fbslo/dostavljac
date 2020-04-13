@@ -15,7 +15,8 @@ router.get('/', (req, res) => {
         if(result.length == '0') res.send('This secret does not exisit')
         else {
           confirmEmail(result[0].email)
-          res.send('')
+          updateDatabase(result[0].email)
+          res.send('Vaš email naslov je potrjen!')
         }
       }
     })
@@ -30,6 +31,16 @@ function confirmEmail(email){
     if(err) console.log('Error updating verifyEmail database! ' +err)
     else {
       console.log('User '+email+' verified!')
+    }
+  })
+}
+
+function updateDatabase(email){
+  var sql = 'UPDATE users SET verifiedEmail = "true" WHERE email = ?;'
+  con.query(sql, email, (err, result) => {
+    if(err) console.log('Error updating users database! ' +err)
+    else {
+      console.log('User '+email+' verified and database user changed!')
     }
   })
 }
