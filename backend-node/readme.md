@@ -4,6 +4,10 @@ Preimenuj `demo.env` v `.env`
 
 ---
 
+Database table: `users`
+
+`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT`
+
 Database table: `verifyEmail`
 
 `email TEXT, secret TEXT, date TEXT, used BOOL`
