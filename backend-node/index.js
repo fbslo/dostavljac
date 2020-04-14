@@ -27,6 +27,8 @@ app.use('/api/verifyEmail', require('./api/verifyEmail.js'));
 app.use('/api/kyc', require('./api/kyc.js'));
 //registration of new users
 app.use('/api/register', require('./api/register.js'));
+//kraji v Sloveniji
+app.use('/api/kraji', require('./api/kraji.js'))
 
 
 app.listen(8080)

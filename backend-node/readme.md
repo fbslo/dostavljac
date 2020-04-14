@@ -4,6 +4,8 @@ Preimenuj `demo.env` v `.env`
 
 ---
 
+- MySQL
+
 Database table: `users`
 
 `name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT`
@@ -66,3 +68,17 @@ Registracija novih uporabnikov.
 ```
 
 If email, password or name is missing, redirect to: ?status=false&reason=missing
+
+---
+
+`GET` `/api/kraji`
+
+Seznam slovenskih krajev in poštnih številk.
+
+```
+@apiParam {string} filter (optional) Filter by name of postal code
+```
+
+Vrne JSON array oblike `{"result":[{"postnaStevilka": "1000", "kraj": "Ljubljana"}, {"postnaStevilka": "1001", "kraj": "Ljubljana - P. P."}]}`
+
+Filter omogoča filtriranje rezultatov (npr. `?filter=1000`) po imenu kraja ali poštni številki (ali seznam krajev, ki vsebujejo ime/poštno števliko (npr. `?filter=lju` vrne vse kraje, ki imajo v imenu `lju`)).
