@@ -1,6 +1,6 @@
 *.css linguist-detectable=false
 *.scss linguist-detectable=false
-frontend/assets/* linguist-vendored
-frontend/js/jquery.js linguist-vendored
-frontend/css/bootstrap.min.css linguist-vendored
+frontend/assets/* external linguist-vendored
+frontend/js/jquery.js external linguist-vendored
+frontend/css/bootstrap.min.css external linguist-vendored
 
