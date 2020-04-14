@@ -5,7 +5,8 @@ var kraji = require('../api-data/kraji.json')
 
 //GET /api/kraji
 router.get('/', (req, res) => {
-  var query = req.query.filter.toLowerCase() || 'null'
+  var query_raw = req.query.filter || 'null'
+  var query = query_raw.toLowerCase()
   if(query != 'null'){
     var result = '{"result":[]}';
     var obj = JSON.parse(result);
