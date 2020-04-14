@@ -1,6 +1,10 @@
 ***Dokumentacija za NodeJS API:***
 
-Preimenuj `demo.env` v `.env`
+Preimenuj `demo.env` v `.env` in dodaj potrebne podatke.
+
+Dodaj podatke za MySQL baso podatkov v `database/db_config.json`
+
+`node index.js` (ali s pm2 `pm2 start index.js`)
 
 ---
 
