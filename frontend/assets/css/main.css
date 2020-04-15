@@ -11,6 +11,18 @@
 *::after {
   box-sizing: border-box; }
 
+.white-background {
+  background-color: white !important;
+  background: white !important;
+}
+
+.padding {
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -2111,7 +2123,7 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #502c6c;
+  background-color: #3c2151;
   border-color: #502c6c; }
   .btn-primary:hover {
     color: #fff;
@@ -5359,7 +5371,7 @@ button.bg-success:focus {
   background-color: #33a340 !important; }
 
 .bg-info {
-  background-color: #09ebaf !important; }
+  background-color: #09ebaf ; }
 
 a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
