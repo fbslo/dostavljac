@@ -8,7 +8,7 @@ const sgMail = require('@sendgrid/mail');
 var domain = process.env.DOMAIN
 
 router.post('/', (req, res) => {
-  var server_secret = req.body.secret
+  var server_secret = req.body.server_secret
   var email = req.body.email
   if(!email || !server_secret){
     res.send('Missing information!')

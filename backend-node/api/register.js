@@ -2,6 +2,7 @@ const express = require('express')
 var router = express.Router()
 //get database connection
 var con = require('../database/database.js')
+var request = require('request')
 
 //password hashing
 const bcrypt = require('bcrypt-nodejs');
@@ -12,6 +13,7 @@ router.post('/', (req, res) => {
   var email = req.body.email
   var password = req.body.password
   var date = new Date()
+  var domain = req.protocol + '://' + req.headers.host
   if(!email || !password || !validateEmail(email) || !name){
     res.redirect('/?status=false&reason=missing')
   } else {
@@ -21,7 +23,21 @@ router.post('/', (req, res) => {
         var values = [[name, email, hash, date, 'false']]
         con.query(sql, [values], (err, result) => {
           if(err) res.send("User not created!")
-          if(result) res.send("User created!")
+          if(result){
+            request.post(domain+'/api/sendVerificationEmail', {
+              json: {
+                email: email,
+                server_secret: process.env.SERVER_SECRET
+              }
+            }, (error, res, body) => {
+              if (error) {
+                console.error("Error sending verification email: "+error)
+                return
+              }
+              console.log(body)
+            })
+            res.send("User created!")
+          }
         });
       });
     });

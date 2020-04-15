@@ -30,7 +30,7 @@ Database table: `kyc`
 sendVerificationEmail is using Sendgrid's email API.
 
 ```
-@apiParam {string} secret Server secret (from .env)
+@apiParam {string} server_secret Server secret (from .env)
 @apiParam {string} email User's email
 ```
 
