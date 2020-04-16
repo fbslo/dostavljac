@@ -86,3 +86,10 @@ Seznam slovenskih krajev in poštnih številk.
 Vrne JSON array oblike `{"result":[{"postnaStevilka": "1000", "kraj": "Ljubljana"}, {"postnaStevilka": "1001", "kraj": "Ljubljana - P. P."}]}`
 
 Filter omogoča filtriranje rezultatov (npr. `?filter=1000`) po imenu kraja ali poštni številki (ali seznam krajev, ki vsebujejo ime/poštno števliko (npr. `?filter=lju` vrne vse kraje, ki imajo v imenu `lju`)).
+
+Zahvala @DejanL za seznam krajev na https://api.lavbic.net/kraji
+
+---
+
+<details><summary>Donations</summary><p><p>Bitcoin: bc1q5a2c4amvwwftfcmw8ng3a0d5q6wftpmsq9kxa3</details>
+
