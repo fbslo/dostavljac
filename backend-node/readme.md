@@ -91,5 +91,24 @@ Zahvala @DejanL za seznam krajev na https://api.lavbic.net/kraji
 
 ---
 
-<details><summary>Donations</summary><p><p>Bitcoin: bc1q5a2c4amvwwftfcmw8ng3a0d5q6wftpmsq9kxa3</details>
+`POST` `/login`
 
+Pridobitev JSON Web Token (JWT) za autentikacijo uporabnika.
+
+```
+@apiParam {string} email User's email
+@apiParam {string} password User's password
+```
+
+Vrne JSON:
+
+- `msg: 'ok', token: token`, token je JWT token
+- `message: 'No such user found'`, če uporabnikov email ni v bazi podatkov
+- `message: 'Password is not correct!'`, če se geslo ne ujema s tistim v baiz podatkov
+- `message: 'Missing credentials!'`, če manjka geslo ali email
+- `message: 'Email is not verified!'`, če email še ni potrjen
+- `message: 'Internal Server Error!'`, če pride do napake pri prejemanji podatkov iz baze podatkov
+
+---
+
+<details><summary>Donations</summary><p><p>Bitcoin: bc1q5a2c4amvwwftfcmw8ng3a0d5q6wftpmsq9kxa3</details>
