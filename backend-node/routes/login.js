@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
       if(err){
         res.status(500).json({ message: 'Internal Server Error!' });
       }
-      if(!result_db){
+      if(!result_db || result_db.length == '0'){
         res.status(401).json({ message: 'No such user found' });
       } else {
         if(result_db[0].verifiedEmail == 'false'){
@@ -35,10 +35,9 @@ router.post('/', (req, res) => {
               //user's password is correct
               let payload = { id: result_db[0].email };
               let token = jwt.sign(payload, jwtOptions.secretOrKey);
-              res.json({ msg: 'ok', token: token });
+              res.json({ message: 'ok', token: token });
             } else {
               res.status(401).json({ message: 'Password is not correct!' });
-              console.log(password, password_db)
             }
           });
         }

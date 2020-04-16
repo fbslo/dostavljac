@@ -3,6 +3,14 @@ var app = express()
 var bodyParser = require("body-parser");
 require('dotenv').config();
 const fileUpload = require('express-fileupload');
+//allow cors
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); //remove in production
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type');
+  next();
+});
 //connect to database
 var con = require('./database/database.js')
 //JSON web token
