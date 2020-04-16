@@ -22,9 +22,8 @@ function ajaxLogin(event){
       data: '{"email": "'+email+'", "password":"'+password+'"}',
       dataType: 'json',
       success: function(data){
-          console.log(data.message, data.token)
-          window.localStorage.setItem('jwt', data.token)
-          //localStorage.getItem('jwt')
+          console.log(data.message)
+          window.location.replace('/dashboard')
       },
       error: function(data){
         console.log('ERROR: '+JSON.stringify(data))
