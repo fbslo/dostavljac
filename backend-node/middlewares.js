@@ -6,6 +6,7 @@ module.exports = {
         var sign = process.env.JWT_SECRET;
 
         jwt.verify(token, sign, function (err, decoded) {
+          console.log(decoded)
             if (err || !decoded) {
                 console.log("invalid token");
                 res.send(403);

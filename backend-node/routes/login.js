@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
         res.status(500).json({ message: 'Internal Server Error!' });
       }
       if(!result_db || result_db.length == '0'){
-        res.status(401).json({ message: 'No such user found' });
+        res.status(401).json({ message: 'No such user found!' });
       } else {
         if(result_db[0].verifiedEmail == 'false'){
           res.status(401).json({ message: 'Email is not verified!' });
