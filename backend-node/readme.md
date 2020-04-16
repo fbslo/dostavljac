@@ -71,7 +71,13 @@ Registracija novih uporabnikov.
 @apiParam {string} password User's password
 ```
 
-If email, password or name is missing, redirect to: ?status=false&reason=missing
+Vrne JSON:
+- `message: User created!`, uporabnik je usvarjen
+- `message: User not created!`, napaka pri ustvarjanju uporabnika (MySQL napaka)
+- `message: Missing credentials!`, če manjka geslo ali email ali je email v nepravilnem formatu
+- `message: Name or password is to short!`, če je geslo krajše od 10 znakov ali ime krajše od 5 znakov.
+- `message: Email already exisits!`, če je email že uporabljen.
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
 
 ---
 
@@ -102,12 +108,12 @@ Pridobitev JSON Web Token (JWT) za autentikacijo uporabnika.
 
 Vrne JSON:
 
-- `message: 'ok', token: token`, token je JWT token
-- `message: 'No such user found'`, če uporabnikov email ni v bazi podatkov
-- `message: 'Password is not correct!'`, če se geslo ne ujema s tistim v baiz podatkov
-- `message: 'Missing credentials!'`, če manjka geslo ali email
-- `message: 'Email is not verified!'`, če email še ni potrjen
-- `message: 'Internal Server Error!'`, če pride do napake pri prejemanji podatkov iz baze podatkov
+- `message: ok, token: token`, token je JWT token
+- `message: No such user found`, če uporabnikov email ni v bazi podatkov
+- `message: Password is not correct!`, če se geslo ne ujema s tistim v bazi podatkov
+- `message: Missing credentials!`, če manjka geslo ali email
+- `message: Email is not verified!`, če email še ni potrjen
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
 
 ---
 
