@@ -108,7 +108,7 @@ Pridobitev JSON Web Token (JWT) za autentikacijo uporabnika.
 
 Vrne JSON:
 
-- `message: ok, token: token`, token je JWT token
+- `message: ok`, JWT je shranjen v cookie
 - `message: No such user found`, če uporabnikov email ni v bazi podatkov
 - `message: Password is not correct!`, če se geslo ne ujema s tistim v bazi podatkov
 - `message: Missing credentials!`, če manjka geslo ali email

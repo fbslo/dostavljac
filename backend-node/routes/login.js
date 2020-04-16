@@ -4,15 +4,6 @@ var con = require('../database/database.js')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 
-const passport = require('passport');
-const passportJWT = require('passport-jwt');
-
-let ExtractJwt = passportJWT.ExtractJwt;
-let JwtStrategy = passportJWT.Strategy;
-
-let jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = process.env.JWT_SECRET;
 
 //POST /login
 router.post('/', (req, res) => {
@@ -32,10 +23,17 @@ router.post('/', (req, res) => {
           var password_db = result_db[0].password
           bcrypt.compare(password, password_db, function(err, result) {
             if(result == true){
-              //user's password is correct
-              let payload = { id: result_db[0].email };
-              let token = jwt.sign(payload, jwtOptions.secretOrKey);
-              res.json({ message: 'ok', token: token });
+              //crette token
+              function createAuthToken(id, agent) {
+                  var sign = process.env.JWT_SECRET
+                  var package = { 'device': id, 'access': 'authenticated', 'agent': agent, 'user': result_db[0].email }
+                  return jwt.sign(package, sign, { expiresIn: '90 days' });
+              };
+              var updatedToken = createAuthToken(req.body.device, req.body.userAgent);
+              var newDate = new Date();
+              var expDate = newDate.setMonth(newDate.getMonth() + 3)
+              res.cookie('id', updatedToken, { sameSite: true, maxAge: expDate });
+              res.json({ message: 'ok' });
             } else {
               res.status(401).json({ message: 'Password is not correct!' });
             }

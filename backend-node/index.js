@@ -3,6 +3,7 @@ var app = express()
 var bodyParser = require("body-parser");
 require('dotenv').config();
 const fileUpload = require('express-fileupload');
+var cookies = require("cookie-parser");
 //allow cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); //remove in production
@@ -15,36 +16,6 @@ app.use(function(req, res, next) {
 var con = require('./database/database.js')
 //JSON web token
 const jwt = require('jsonwebtoken');
-
-const passport = require('passport');
-const passportJWT = require('passport-jwt');
-
-let ExtractJwt = passportJWT.ExtractJwt;
-let JwtStrategy = passportJWT.Strategy;
-
-let jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = process.env.JWT_SECRET;
-
-// lets create our strategy for web token
-let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
-  var sql = 'SELECT * FROM users WHERE email = ?;'
-  con.query(sql, jwt_payload.id, (err, result_db) => {
-    if(!result_db) console.log('Email not found!')
-    else {
-      let user = result_db[0].email
-      if (user) {
-        next(null, user);
-      } else {
-        next(null, false);
-      }
-    }
-  });
-});
-
-// use the strategy
-passport.use(strategy);
 
 //file upload
 app.use(fileUpload({
@@ -62,7 +33,10 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 //for parsing application/json
 app.use(bodyParser.json());
+app.use(cookies())
 
+//serve all frontend files
+app.use('/', require('./routes/frontend.js'))
 //Login route
 app.use('/login', require('./routes/login.js'));
 //send verification email using Sendgrid's API
@@ -74,7 +48,7 @@ app.use('/api/kyc', require('./api/kyc.js'));
 //registration of new users
 app.use('/api/register', require('./api/register.js'));
 //kraji & poštne številke v Sloveniji
-app.use('/api/kraji', passport.authenticate('jwt', { session: false }), require('./api/kraji.js'))
+app.use('/api/kraji', require('./api/kraji.js'))
 
 
 app.listen(8080)
