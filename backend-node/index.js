@@ -17,6 +17,10 @@ var con = require('./database/database.js')
 //JSON web token
 const jwt = require('jsonwebtoken');
 
+//authentication middleware
+var middleware = require('./middlewares.js')
+var isAuth = middleware.authenticateRoute
+
 //file upload
 app.use(fileUpload({
     limits: {
@@ -49,6 +53,9 @@ app.use('/api/kyc', require('./api/kyc.js'));
 app.use('/api/register', require('./api/register.js'));
 //kraji & poštne številke v Sloveniji
 app.use('/api/kraji', require('./api/kraji.js'))
-
+//user details
+app.use('/api/userStatus', isAuth, require('./api/userStatus.js'))
+//reset user's password
+app.use('/api/resetPassword', isAuth, require('./api/resetPassword.js'))
 
 app.listen(8080)

@@ -22,6 +22,9 @@ Database table: `kyc`
 
 `email TEXT, file TEXT, date TEXT`
 
+Database table: `resetPassword`
+
+`email TEXT, secret TEXT, date TEXT, status TEXT`
 
 ---
 
@@ -109,10 +112,63 @@ Pridobitev JSON Web Token (JWT) za autentikacijo uporabnika.
 Vrne JSON:
 
 - `message: ok`, JWT je shranjen v cookie
-- `message: No such user found`, če uporabnikov email ni v bazi podatkov
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
 - `message: Password is not correct!`, če se geslo ne ujema s tistim v bazi podatkov
 - `message: Missing credentials!`, če manjka geslo ali email
 - `message: Email is not verified!`, če email še ni potrjen
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/userStatus`
+
+Podrobnosti o uporabniku.
+
+```
+@apiParam {cookie} id User's cookie (from login)
+```
+
+Vrne JSON:
+
+- `message: ok, result: userDetails`, userDetails so podatki o uporabniku.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/resetPassword`
+
+Pošiljanje emaila z potrditveno kodo za spremembo gesla.
+
+```
+@apiParam {string} email User's email
+```
+
+Vrne JSON:
+
+- `message: Email sent!`, userDetails so podatki o uporabniku.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/resetPassword/change`
+
+Sprememba pozabljenega gesla.
+
+```
+@apiParam {string} email User's email
+@apiParam {string} secret Secret from email sent to user
+@apiParam {string} password New user's password
+```
+
+Vrne JSON:
+
+- `message: Password changed!`, geslo je uspešno spremenjeno.
+- `message: Secret already used!`, koda je že uporabljena.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
 - `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
 
 ---

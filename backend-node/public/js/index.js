@@ -17,7 +17,7 @@ function ajaxLogin(event){
   var password = document.getElementById('password').value
   $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/login',
+      url: '/login',
       contentType: 'application/json',
       data: '{"email": "'+email+'", "password":"'+password+'"}',
       dataType: 'json',
@@ -39,14 +39,35 @@ function ajaxRegister(event){
   var password = document.getElementById('password').value
   $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/api/register',
+      url: '/api/register',
       contentType: 'application/json',
       data: '{"email": "'+email+'", "password":"'+password+'", "name": "'+name+'"}',
       dataType: 'json',
       success: function(data){
           console.log(data.message, data.token)
-          window.localStorage.setItem('jwt', data.token)
-          //localStorage.getItem('jwt')
+          sendAlert('Uspeh!', 'Račun je bil ustvarjen!', 'success')
+          login()
+      },
+      error: function(data){
+        console.log('ERROR: '+JSON.stringify(data))
+        handleErrorMessages(data)
+      }
+  });
+  event.preventDefault();
+}
+
+function ajaxResetPassword(event){
+  var email = document.getElementById('email').value
+  $.ajax({
+      type: 'POST',
+      url: '/api/resetPassword',
+      contentType: 'application/json',
+      data: '{"email": "'+email+'"}',
+      dataType: 'json',
+      success: function(data){
+          console.log(data.message)
+          sendAlert('Uspeh!', 'Email z navodili je bil poslan na naslov: '+email+'!', 'success')
+          login()
       },
       error: function(data){
         console.log('ERROR: '+JSON.stringify(data))
@@ -59,7 +80,7 @@ function ajaxRegister(event){
 function handleErrorMessages(data){
   var message = data.responseJSON.message
   //login
-  if (message == 'No such user found') sendAlert('Napaka', 'Uporabnik ni najden!', 'error')
+  if (message == 'No such user found!') sendAlert('Napaka', 'Uporabnik ni najden!', 'error')
   if (message == 'Password is not correct!') sendAlert('Napaka', 'Geslo ni pravilno!', 'error')
   if (message == 'Missing credentials!') sendAlert('Napaka', 'Manjkajoče geslo ali email!', 'error')
   if (message == 'Email is not verified!') sendAlert('Napaka', 'Email še ni potrjen!!', 'error')
@@ -70,6 +91,7 @@ function handleErrorMessages(data){
   if(message == 'Email already exisits!') sendAlert('Napaka', 'Ta email je že uporabljen!', 'error')
 }
 
+//display regsiter form
 function register(){
   var register = `<form class="border rounded p-5">
     <h3 class="mb-4 text-center">Registracija</h3>
@@ -89,7 +111,7 @@ function register(){
   document.getElementById('left-button').innerHTML = '<a class="btn btn-outline-light btn-lg btn-round" onclick="login()">Prijava</a>'
 }
 
-
+//display login form
 function login(){
   var register = `
   <form class="border rounded p-5">
@@ -101,9 +123,24 @@ function login(){
       <input type="password" class="form-control" id="password" placeholder="Geslo" required>
     </div>
     <button type="submit" class="btn btn-success btn-round btn-block shadow-sm" onclick='ajaxLogin(event)'>Prijava</button>
-    <small class="d-block mt-4 text-center"><a class="text-gray" href="#">Pozabljeno geslo?</a></small>
+    <small class="d-block mt-4 text-center"><a class="text-gray" onclick='resetPassword()'>Pozabljeno geslo?</a></small>
   </form>`
   document.getElementById('login-register').innerHTML = register
+  document.getElementById('left-button').innerHTML = '<a class="btn btn-outline-light btn-lg btn-round" onclick="register()">Registracija</a>'
+}
+
+//change password
+function resetPassword(){
+  var resetPassword = `
+  <form class="border rounded p-5">
+    <h3 class="mb-4 text-center">Pozabljeno geslo</h3>
+    <div class="form-group">
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
+    </div>
+    <button type="submit" class="btn btn-success btn-round btn-block shadow-sm" onclick='ajaxResetPassword(event)'>Spremeni geslo</button>
+    <small class="d-block mt-4 text-center"><a class="text-gray" onclick='login()'>Prijava</a></small>
+  </form>`
+  document.getElementById('login-register').innerHTML = resetPassword
   document.getElementById('left-button').innerHTML = '<a class="btn btn-outline-light btn-lg btn-round" onclick="register()">Registracija</a>'
 }
 
