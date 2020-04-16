@@ -15,34 +15,52 @@ router.post('/', (req, res) => {
   var date = new Date()
   var domain = req.protocol + '://' + req.headers.host
   if(!email || !password || !validateEmail(email) || !name){
-    res.redirect('/?status=false&reason=missing')
+    res.status(400).json({ message: "Missing credentials!" })
   } else {
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-      bcrypt.hash(password, salt, null, function(err, hash) {
-        var sql = 'INSERT INTO users (name, email, password, date, verifiedEmail) VALUES ?'
-        var values = [[name, email, hash, date, 'false']]
-        con.query(sql, [values], (err, result) => {
-          if(err) res.send("User not created!")
-          if(result){
-            request.post(domain+'/api/sendVerificationEmail', {
-              json: {
-                email: email,
-                server_secret: process.env.SERVER_SECRET
-              }
-            }, (error, res, body) => {
-              if (error) {
-                console.error("Error sending verification email: "+error)
-                return
-              }
-              console.log(body)
-            })
-            res.send("User created!")
-          }
-        });
-      });
-    });
+    if(name.length < 5 || password.length < 10) {
+      res.status(400).json({ message: "Name or password is to short!" })
+    } else {
+      con.query('SELECT * FROM users WHERE email=?', email, (err, result) => {
+        if(!result || result.length != '0'){
+          res.status(400).json({ message: "Email already exisits!" })
+        } else if(err){
+          res.status(500).json({ message: "Internal Server Error!" })
+        } else {
+          bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(password, salt, null, async function(err, hash) {
+              var sql = 'INSERT INTO users (name, email, password, date, verifiedEmail) VALUES ?'
+              var values = [[name, email, hash, date, 'false']]
+              con.query(sql, [values], (err, result) => {
+                if(err) res.status(500).json({ message: "User not created!" })
+                if(result){
+                  sendVerificationEmail(domain, email)
+                  res.status(200).json({ message: "User created!" })
+                }
+              });
+            });
+          });
+        }
+      })
+    }
   }
 })
+
+
+
+function sendVerificationEmail(domain, email){
+  request.post(domain+'/api/sendVerificationEmail', {
+    json: {
+      email: email,
+      server_secret: process.env.SERVER_SECRET
+    }
+  }, (error, res, body) => {
+    if (error) {
+      console.error("Error sending verification email: "+error)
+      return
+    }
+    console.log(body)
+  })
+}
 
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
