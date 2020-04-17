@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
       else {
         if(!result || result.length == '0') res.status(400).json({ message: 'No such user found!' });
         else {
-          var secret = generateSecret(30)
+          var secret = generateSecret(40)
           saveSecretToDatabase(email, secret)
           sendResetEmail(email, secret)
           res.status(200).json({ message: 'Email sent!' });
@@ -33,7 +33,7 @@ router.post('/change', (req, res) => {
   var email = req.body.email
   var secret = req.body.secret
   var new_password = req.body.new_password
-  if(!email || !new_password || !password) res.status(400).json({ message: "Missing credentials!" })
+  if(!email || !new_password || !secret) res.status(400).json({ message: "Missing credentials!" })
   else {
     con.query('SELECT * FROM resetPassword WHERE email=? AND secret = ?;', [email, secret], (err, result) => {
       if(err) res.status(500).json({ message: 'Internal Server Error!' });
@@ -44,7 +44,7 @@ router.post('/change', (req, res) => {
           var status = result[0].status
           if(status == 'unused'){
             bcrypt.genSalt(saltRounds, function(err, salt) {
-              bcrypt.hash(password, salt, null, async function(err, hash) {
+              bcrypt.hash(new_password, salt, null, async function(err, hash) {
                 updatePassword(email, hash)
                 updateResetPasswordDatabase(email, secret)
                 res.status(200).json({ message: 'Password changed!' });
@@ -60,6 +60,7 @@ router.post('/change', (req, res) => {
 })
 
 function sendResetEmail(email, secret){
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
     to: email,
     from: 'info@dostavljac.com',
