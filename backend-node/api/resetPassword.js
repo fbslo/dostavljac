@@ -32,8 +32,8 @@ router.post('/', (req, res) => {
 router.post('/change', (req, res) => {
   var email = req.body.email
   var secret = req.body.secret
-  var password = req.body.password
-  if(!email || !secret || !password) res.status(400).json({ message: "Missing credentials!" })
+  var new_password = req.body.new_password
+  if(!email || !new_password || !password) res.status(400).json({ message: "Missing credentials!" })
   else {
     con.query('SELECT * FROM resetPassword WHERE email=? AND secret = ?;', [email, secret], (err, result) => {
       if(err) res.status(500).json({ message: 'Internal Server Error!' });
@@ -64,7 +64,7 @@ function sendResetEmail(email, secret){
     to: email,
     from: 'info@dostavljac.com',
     subject: 'Pozabljeno geslo!',
-    html: '<a href="'+domain+'/api/resetPassword?secret='+secret+'">Spremeni svoje geslo</a> ali uporabi to povezavo:<br> '+domain+'/api/ResetEmail?secret='+secret,
+    html: '<a href="'+domain+'/resetPassword?secret='+secret+'">Spremeni svoje geslo</a> ali uporabi to povezavo:<br> '+domain+'/ResetEmail?secret='+secret,
   };
   sgMail.send(msg);
 }
