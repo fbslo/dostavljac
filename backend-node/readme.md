@@ -4,6 +4,8 @@ Preimenuj `demo.env` v `.env` in dodaj potrebne podatke.
 
 Dodaj podatke za MySQL baso podatkov v `database/db_config.json`
 
+Dodaj potrebne knjižnice: `npm install`
+
 `node index.js` (ali s pm2 `pm2 start index.js`)
 
 ---
@@ -160,7 +162,7 @@ Sprememba pozabljenega gesla.
 ```
 @apiParam {string} email User's email
 @apiParam {string} secret Secret from email sent to user
-@apiParam {string} password New user's password
+@apiParam {string} new_password New user's password
 ```
 
 Vrne JSON:
@@ -170,6 +172,33 @@ Vrne JSON:
 - `message: No such user found!`, če uporabnikov email ni v bazi podatkov
 - `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
 - `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/changePassword`
+
+Sprememba  gesla.
+
+```
+@apiParam {cookie} id User's cookie
+@apiParam {string} password User's old password
+@apiParam {string} new_password New user's password
+```
+
+Vrne JSON:
+
+- `message: Password changed!`, geslo je uspešno spremenjeno.
+- `message: Old password is not correct!!`, staro geslo ni pravilno.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+- `message: Updating password failed!`, če pride do napake pri vstavljanju novega gesla v bazo podatkov
+
+---
+
+***TODO***
+
+/resetPassword
 
 ---
 

@@ -56,6 +56,8 @@ app.use('/api/kraji', require('./api/kraji.js'))
 //user details
 app.use('/api/userStatus', isAuth, require('./api/userStatus.js'))
 //reset user's password
-app.use('/api/resetPassword', isAuth, require('./api/resetPassword.js'))
+app.use('/api/resetPassword', require('./api/resetPassword.js'))
+//change user's password
+app.use('/api/changePassword', isAuth, require('./api/changePassword.js'))
 
 app.listen(8080)
