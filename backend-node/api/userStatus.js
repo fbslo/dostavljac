@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   jwt.verify(token, sign, function (err, decoded) {
     cookie = decoded
   })
-  var sql = 'SELECT * FROM users WHERE email=?;'
+  var sql = 'SELECT *, "" as password FROM users WHERE email=?;'
   var email = cookie.user
   con.query(sql, email, (err, result) => {
     if(err) res.status(500).json({ message: "Internal Server Error!" })
