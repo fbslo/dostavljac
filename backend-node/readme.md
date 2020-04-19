@@ -4,6 +4,8 @@ Preimenuj `demo.env` v `.env` in dodaj potrebne podatke.
 
 Dodaj podatke za MySQL baso podatkov v `database/db_config.json`
 
+Dodaj potrebne knjižnice: `npm install`
+
 `node index.js` (ali s pm2 `pm2 start index.js`)
 
 ---
@@ -12,7 +14,7 @@ Dodaj podatke za MySQL baso podatkov v `database/db_config.json`
 
 Database table: `users`
 
-`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT`
+`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT, userStatus TEXT`
 
 Database table: `verifyEmail`
 
@@ -22,6 +24,9 @@ Database table: `kyc`
 
 `email TEXT, file TEXT, date TEXT`
 
+Database table: `resetPassword`
+
+`email TEXT, secret TEXT, date TEXT, status TEXT`
 
 ---
 
@@ -69,9 +74,16 @@ Registracija novih uporabnikov.
 @apiParam {string} name User's name
 @apiParam {string} email User's email
 @apiParam {string} password User's password
+@apiParam {string} userStatus Status of the user (Prostovoljec or Uporabnik)
 ```
 
-If email, password or name is missing, redirect to: ?status=false&reason=missing
+Vrne JSON:
+- `message: User created!`, uporabnik je usvarjen
+- `message: User not created!`, napaka pri ustvarjanju uporabnika (MySQL napaka)
+- `message: Missing credentials!`, če manjka geslo ali email ali je email v nepravilnem formatu
+- `message: Name or password is to short!`, če je geslo krajše od 10 znakov ali ime krajše od 5 znakov.
+- `message: Email already exisits!`, če je email že uporabljen.
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
 
 ---
 
@@ -91,5 +103,98 @@ Zahvala @DejanL za seznam krajev na https://api.lavbic.net/kraji
 
 ---
 
-<details><summary>Donations</summary><p><p>Bitcoin: bc1q5a2c4amvwwftfcmw8ng3a0d5q6wftpmsq9kxa3</details>
+`POST` `/login`
 
+Pridobitev JSON Web Token (JWT) za autentikacijo uporabnika.
+
+```
+@apiParam {string} email User's email
+@apiParam {string} password User's password
+```
+
+Vrne JSON:
+
+- `message: ok`, JWT je shranjen v cookie
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Password is not correct!`, če se geslo ne ujema s tistim v bazi podatkov
+- `message: Missing credentials!`, če manjka geslo ali email
+- `message: Email is not verified!`, če email še ni potrjen
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/userStatus`
+
+Podrobnosti o uporabniku.
+
+```
+@apiParam {cookie} id User's cookie (from login)
+```
+
+Vrne JSON:
+
+- `message: ok, result: userDetails`, userDetails so podatki o uporabniku.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/resetPassword`
+
+Pošiljanje emaila z potrditveno kodo za spremembo gesla.
+
+```
+@apiParam {string} email User's email
+```
+
+Vrne JSON:
+
+- `message: Email sent!`, userDetails so podatki o uporabniku.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/resetPassword/change`
+
+Sprememba pozabljenega gesla.
+
+```
+@apiParam {string} email User's email
+@apiParam {string} secret Secret from email sent to user
+@apiParam {string} new_password New user's password
+```
+
+Vrne JSON:
+
+- `message: Password changed!`, geslo je uspešno spremenjeno.
+- `message: Secret already used!`, koda je že uporabljena.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+
+---
+
+`POST` `/api/changePassword`
+
+Sprememba  gesla.
+
+```
+@apiParam {cookie} id User's cookie
+@apiParam {string} password User's old password
+@apiParam {string} new_password New user's password
+```
+
+Vrne JSON:
+
+- `message: Password changed!`, geslo je uspešno spremenjeno.
+- `message: Old password is not correct!`, staro geslo ni pravilno.
+- `message: No such user found!`, če uporabnikov email ni v bazi podatkov
+- `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
+- `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
+- `message: Updating password failed!`, če pride do napake pri vstavljanju novega gesla v bazo podatkov
+
+---
+
+<details><summary>Donations</summary><p><p>Bitcoin: bc1q5a2c4amvwwftfcmw8ng3a0d5q6wftpmsq9kxa3</details>

@@ -4,7 +4,6 @@ var config = require('./db_config.json')
 
 //get credentials from db_config.json
 var { database_ip, database_user, database_password, database_port, database } = config
-console.log(config)
 //create connection to MySQL database
 var con = mysql.createConnection({
   host: database_ip,
