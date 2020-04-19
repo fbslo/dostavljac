@@ -14,7 +14,7 @@ Dodaj potrebne knjižnice: `npm install`
 
 Database table: `users`
 
-`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT`
+`name TEXT, email TEXT, password TEXT, date TEXT, verifiedEmail TEXT, userStatus TEXT`
 
 Database table: `verifyEmail`
 
@@ -74,6 +74,7 @@ Registracija novih uporabnikov.
 @apiParam {string} name User's name
 @apiParam {string} email User's email
 @apiParam {string} password User's password
+@apiParam {string} userStatus Status of the user (Prostovoljec or Uporabnik)
 ```
 
 Vrne JSON:
