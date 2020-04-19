@@ -188,17 +188,11 @@ Sprememba  gesla.
 Vrne JSON:
 
 - `message: Password changed!`, geslo je uspešno spremenjeno.
-- `message: Old password is not correct!!`, staro geslo ni pravilno.
+- `message: Old password is not correct!`, staro geslo ni pravilno.
 - `message: No such user found!`, če uporabnikov email ni v bazi podatkov
 - `message: Missing credentials!`, če zahteva ne vsebuje emaila, gesla ali skrivne kode.
 - `message: Internal Server Error!`, če pride do napake pri prejemanju podatkov iz baze podatkov
 - `message: Updating password failed!`, če pride do napake pri vstavljanju novega gesla v bazo podatkov
-
----
-
-***TODO***
-
-/resetPassword
 
 ---
 
