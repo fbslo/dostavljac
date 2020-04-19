@@ -12,9 +12,10 @@ router.post('/', (req, res) => {
   var name = req.body.name
   var email = req.body.email
   var password = req.body.password
+  var userStatus = req.body.userStatus
   var date = new Date()
   var domain = req.protocol + '://' + req.headers.host
-  if(!email || !password || !validateEmail(email) || !name){
+  if(!email || !password || !validateEmail(email) || !name || !userStatus){
     res.status(400).json({ message: "Missing credentials!" })
   } else {
     if(name.length < 5 || password.length < 10) {
@@ -28,8 +29,8 @@ router.post('/', (req, res) => {
         } else {
           bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(password, salt, null, async function(err, hash) {
-              var sql = 'INSERT INTO users (name, email, password, date, verifiedEmail) VALUES ?'
-              var values = [[name, email, hash, date, 'false']]
+              var sql = 'INSERT INTO users (name, email, password, date, verifiedEmail, userStatus) VALUES ?'
+              var values = [[name, email, hash, date, 'false', userStatus]]
               con.query(sql, [values], (err, result) => {
                 if(err) res.status(500).json({ message: "User not created!" })
                 if(result){

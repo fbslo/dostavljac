@@ -1,3 +1,4 @@
+var button;
 function start(){
   var status = urlParams["status"] || ''
   var query = urlParams["reason"] || ''
@@ -41,7 +42,7 @@ function ajaxRegister(event){
       type: 'POST',
       url: '/api/register',
       contentType: 'application/json',
-      data: '{"email": "'+email+'", "password":"'+password+'", "name": "'+name+'"}',
+      data: '{"email": "'+email+'", "password":"'+password+'", "name": "'+name+'", "userStatus": "'+button+'"}',
       dataType: 'json',
       success: function(data){
           console.log(data.message, data.token)
@@ -82,7 +83,7 @@ function handleErrorMessages(data){
   //login
   if (message == 'No such user found!') sendAlert('Napaka', 'Uporabnik ni najden!', 'error')
   if (message == 'Password is not correct!') sendAlert('Napaka', 'Geslo ni pravilno!', 'error')
-  if (message == 'Missing credentials!') sendAlert('Napaka', 'Manjkajoče geslo ali email!', 'error')
+  if (message == 'Missing credentials!') sendAlert('Napaka', 'Manjkajoče geslo, email ali vrsta računa (uporabnik oz. prostovoljec)!', 'error')
   if (message == 'Email is not verified!') sendAlert('Napaka', 'Email še ni potrjen!!', 'error')
   if (message == 'Internal Server Error!') sendAlert('Napaka', 'Napaka strežnika! Prosim poskusite kasneje!', 'error')
   //register
@@ -91,18 +92,37 @@ function handleErrorMessages(data){
   if(message == 'Email already exisits!') sendAlert('Napaka', 'Ta email je že uporabljen!', 'error')
 }
 
+function buttonClick(btn, e){
+  if(btn.id == 'prostovoljec'){
+    document.getElementById('uporabnik').className = 'form-control btn-outline-primary'
+    document.getElementById(btn.id).className = 'form-control btn-primary'
+    button = 'Prostovoljec'
+  } else {
+    document.getElementById('prostovoljec').className = 'form-control btn-outline-primary'
+    document.getElementById(btn.id).className = "form-control btn-primary"
+    button = 'Uporabnik'
+  }
+  e.preventDefault();
+}
+
 //display regsiter form
 function register(){
   var register = `<form class="border rounded p-5">
     <h3 class="mb-4 text-center">Registracija</h3>
     <div class="form-group">
-      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Ime in Priimek" required>
+      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Ime in Priimek" >
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" >
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" id="password" placeholder="Geslo" required>
+      <button class="form-control btn-outline-primary" id="uporabnik" aria-describedby="emailHelp" value='Uporabnik' onclick='buttonClick(this, event)'>Uporabik</button>
+    </div>
+    <div class="form-group">
+      <button class="form-control btn-outline-primary" id="prostovoljec" aria-describedby="emailHelp" value='Prostovoljec' onclick='buttonClick(this, event)'>Prostovoljec</button>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="password" placeholder="Geslo" >
     </div>
     <button type="submit" class="btn btn-success btn-round btn-block shadow-sm" onclick='ajaxRegister(event)'>Registracija</button>
     <small class="d-block mt-4 text-center"><a class="text-gray" onclick='login()'>Prijava</a></small>
