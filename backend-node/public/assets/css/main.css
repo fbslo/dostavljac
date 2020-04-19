@@ -23,6 +23,15 @@
   padding-right: 25px !important;
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

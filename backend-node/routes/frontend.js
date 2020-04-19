@@ -15,4 +15,8 @@ router.get('/dashboard', isAuth, (req, res) => {
   res.sendFile('main.html', { root: '../frontend/' })
 })
 
+router.get('/spremeni-geslo', isAuth, (req, res) => {
+  res.sendFile('change-password.html',  { root: '../frontend' })
+})
+
 module.exports = router;
