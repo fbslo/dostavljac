@@ -65,7 +65,7 @@ function sendResetEmail(email, secret){
     to: email,
     from: 'info@dostavljac.com',
     subject: 'Pozabljeno geslo!',
-    html: '<a href="'+domain+'/resetPassword?secret='+secret+'">Spremeni svoje geslo</a> ali uporabi to povezavo:<br> '+domain+'/ResetEmail?secret='+secret,
+    html: '<a href="'+domain+'/pozabljeno-geslo?secret='+secret+'">Spremeni svoje geslo</a> ali uporabi to povezavo:<br> '+domain+'/pozabljeno-geslo?secret='+secret,
   };
   sgMail.send(msg);
 }
