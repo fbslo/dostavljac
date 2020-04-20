@@ -19,4 +19,8 @@ router.get('/spremeni-geslo', isAuth, (req, res) => {
   res.sendFile('change-password.html',  { root: '../frontend' })
 })
 
+router.get('/pozabljeno-geslo', (req, res) => {
+  res.sendFile('reset-password.html',  { root: '../frontend' })
+})
+
 module.exports = router;
