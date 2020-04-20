@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
           var password_db = result_db[0].password
           bcrypt.compare(password, password_db, function(err, result) {
             if(result == true){
-              //crette token
+              //create token
               function createAuthToken(id, agent) {
                   var sign = process.env.JWT_SECRET
                   var package = { 'device': id, 'access': 'authenticated', 'agent': agent, 'user': result_db[0].email }
