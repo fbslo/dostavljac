@@ -17,18 +17,18 @@ function changePassword(event){
     if(password != confirmPassword){
       sendAlert('Napaka', 'Novo geslo se ne ujema s ponovljenim geslom!', 'error')
     } else {
-      ajaxChangePassword(password, confirmPassword, secret, email, event)
+      ajaxChangePassword(password, secret, email, event)
     }
   }
   event.preventDefault();
 }
 
-function ajaxChangePassword(email, password, secret, email, event){
+function ajaxChangePassword(password, secret, email, event){
   $.ajax({
       type: 'POST',
       url: '/api/resetPassword/change',
       contentType: 'application/json',
-      data: '{"new_password":"'+newPassword+'", "email":"'+email+'", "secret":"'+secret+'"}',
+      data: '{"new_password":"'+password+'", "email":"'+email+'", "secret":"'+secret+'"}',
       dataType: 'json',
       success: function(data){
           console.log(data.message)

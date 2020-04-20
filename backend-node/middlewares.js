@@ -9,11 +9,11 @@ module.exports = {
           console.log(decoded)
             if (err || !decoded) {
                 console.log("invalid token");
-                res.send(403);
+                res.redirect('/')
             }
             else if (decoded && (!decoded.access || decoded.access == "unauthenticated")) {
                 console.log("unauthenticated token");
-                res.send(403);
+                res.redirect('/')
             }
             else if (decoded && decoded.access == "authenticated") {
                 console.log("valid token")
@@ -21,7 +21,7 @@ module.exports = {
             }
             else {
                 console.log("something suspicious")
-                res.send(403);
+                res.redirect('/')
             }
         });
     }
