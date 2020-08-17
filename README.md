@@ -149,7 +149,7 @@ Vrne JSON:
 
 `POST` `/api/resetPassword`
 
-Pošiljanje emaila z potrditveno kodo za spremembo gesla.
+Pošiljanje emaila s potrditveno kodo za spremembo gesla.
 
 ```
 @apiParam {string} email User's email
